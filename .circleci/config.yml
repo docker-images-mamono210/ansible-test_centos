@@ -1,0 +1,30 @@
+jobs:
+  build-and-push:
+    executor: docker/docker
+    steps:
+      - setup_remote_docker
+      - checkout
+      - docker/check
+      - docker/build:
+          image: tomonorimatsumura/ansible-test
+          tag: latest
+      - docker/push:
+          image: tomonorimatsumura/ansible-test
+          tag: latest
+
+orbs:
+  docker: circleci/docker@1.0.1
+
+version: 2.1
+workflows:
+  version: 2
+  build:
+    triggers:
+      - schedule:
+          cron: "0 12 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - build-and-push
