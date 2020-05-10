@@ -1,4 +1,5 @@
-[![](https://github.com/docker-hub-tm/ansible-test/workflows/Build/badge.svg)](https://github.com/docker-hub-tm/ansible-test/actions?query=workflow%3ABuild)
-[![](https://github.com/docker-hub-tm/ansible-test/workflows/Hadolint/badge.svg)](https://github.com/docker-hub-tm/ansible-test/actions?query=workflow%3AHadolint)
-[![](https://github.com/docker-hub-tm/ansible-test/workflows/Trailing%20whitespace/badge.svg)](https://github.com/docker-hub-tm/ansible-test/actions?query=workflow%3A%22Trailing+whitespace%22)
+[![](https://github.com/docker-hub-tm/ansible-test/workflows/yamllint/badge.svg)](https://github.com/docker-hub-tm/ansible-test/actions?query=workflow%3Ayamllint)
+[![](https://github.com/docker-hub-tm/ansible-test/workflows/docker%20build/badge.svg)](https://github.com/docker-hub-tm/ansible-test/actions?query=workflow%3A%22docker+build%22)
+[![](https://github.com/docker-hub-tm/ansible-test/workflows/hadolint/badge.svg)](https://github.com/docker-hub-tm/ansible-test/actions?query=workflow%3Ahadolint)
+[![](https://github.com/docker-hub-tm/ansible-test/workflows/trailing%20whitespace/badge.svg)](https://github.com/docker-hub-tm/ansible-test/actions?query=workflow%3A%22trailing+whitespace%22)
 [![CircleCI](https://circleci.com/gh/docker-hub-tm/ansible-test.svg?style=svg)](https://circleci.com/gh/docker-hub-tm/ansible-test)
