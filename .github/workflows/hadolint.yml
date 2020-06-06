@@ -5,9 +5,14 @@ on: push
 jobs:
   check:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        base-image: [centos7, centos8]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
       - name: Dockerfile lint
-        uses: brpaz/hadolint-action@master
+        uses: brpaz/hadolint-action@eb9b96b
+        with:
+          dockerfile: ${{ matrix.base-image }}/Dockerfile

@@ -2,19 +2,23 @@
 jobs:
   build-and-push:
     executor: docker/docker
+    parameters:
+      base-image:
+        type: string
     steps:
       - setup_remote_docker
       - checkout
       - docker/check
       - docker/build:
           image: tomonorimatsumura/ansible-test
-          tag: latest
+          path: << parameters.base-image >>
+          tag: << parameters.base-image >>-latest
       - docker/push:
           image: tomonorimatsumura/ansible-test
-          tag: latest
+          tag: << parameters.base-image >>-latest
 
 orbs:
-  docker: circleci/docker@1.0.1
+  docker: circleci/docker@1.2.1
 
 version: 2.1
 workflows:
@@ -28,4 +32,7 @@ workflows:
               only:
                 - master
     jobs:
-      - build-and-push
+      - build-and-push:
+          matrix:
+            parameters:
+              base-image: ['centos7', 'centos8']
