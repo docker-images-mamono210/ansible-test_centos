@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        base-image: [centos7, centos8]
+        base-image: [centos7, centos7jp, centos8]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
