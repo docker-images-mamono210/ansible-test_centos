@@ -1,0 +1,71 @@
+---
+name: build
+on: [deployment, push]
+
+jobs:
+  docker-hub:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        base-image: [centos7, centos7jp, centos8]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Push docker image to Docker Hub
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: ${{ secrets.DOKCER_HUB_REPO }}
+          dockerfile: ${{ matrix.base-image }}/Dockerfile
+          tags: ${{ matrix.base-image }}-latest
+
+  github-packages:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        base-image: [centos7, centos7jp, centos8]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Push docker image to GitHub Packages
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: docker.pkg.github.com
+          repository: docker-hub-tm/ansible-test/${{ matrix.base-image }}
+          dockerfile: ${{ matrix.base-image }}/Dockerfile
+          tags: latest
+
+  hadolint:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        base-image: [centos7, centos7jp, centos8]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Dockerfile lint
+        uses: brpaz/hadolint-action@eb9b96b
+        with:
+          dockerfile: ${{ matrix.base-image }}/Dockerfile
+
+  find-trailing-whitespace:
+    name: Find Trailing Whitespace
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: harupy/find-trailing-whitespace@56310d7
+
+  yamllint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: yaml-lint
+        uses: ibiqlik/action-yamllint@665205c
+        with:
+          config_file: .yamllint
