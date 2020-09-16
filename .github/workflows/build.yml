@@ -21,7 +21,7 @@ jobs:
           dockerfile: ${{ matrix.base-image }}/Dockerfile
           tags: ${{ matrix.base-image }}-latest
 
-  github-packages:
+  github-container-registory:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -34,8 +34,8 @@ jobs:
         uses: docker/build-push-action@v1
         with:
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-          registry: docker.pkg.github.com
+          password: ${{ secrets.CR_PAT}}
+          registry: ghcr.io
           repository: docker-hub-tm/ansible-test/${{ matrix.base-image }}
           dockerfile: ${{ matrix.base-image }}/Dockerfile
           tags: latest
