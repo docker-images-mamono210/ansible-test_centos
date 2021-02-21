@@ -50,7 +50,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Dockerfile lint
-        uses: brpaz/hadolint-action@eb9b96b
+        uses: brpaz/hadolint-action@eb9b96be611b84830aa1babacfb7070ecd2a8b1b
         with:
           dockerfile: ${{ matrix.base-image }}/Dockerfile
 
