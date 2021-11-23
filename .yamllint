@@ -1,4 +1,14 @@
 ---
+yaml-files:
+  - '*.yaml'
+  - '*.yml'
+  - '.yamllint'
+
+extends: default
+
+ignore: |
+  README.md
+
 rules:
   braces: enable
   brackets: enable
