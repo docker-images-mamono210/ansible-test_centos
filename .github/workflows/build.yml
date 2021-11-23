@@ -3,6 +3,42 @@ name: build
 on: [deployment, push]
 
 jobs:
+  detect-secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3
+
+      - name: Install Yelp detect-secrets
+        run: |
+          pip install detect-secrets
+
+      - name: Execulte detect-secrets(disabled KeywordDetector plugin)
+        run: |
+          detect-secrets scan --disable-plugin KeywordDetector \
+          | jq .results > results.json
+
+      - name: Check whether detect-secrets found vulnerability
+        run: |
+          line=$(cat results.json | wc -w)
+          if [ $line -gt 2 ]; then
+            echo "vulnerability was found"
+            detect-secrets scan | jq .results -C
+            exit 1;
+          fi
+
+      - name: Show detect-secrets version
+        run: |
+          pip list | grep detect-secrets \
+          | GREP_COLORS='mt=01;34' egrep --color=always '[[:digit:]]' \
+          | GREP_COLORS='mt=01;34' egrep --color=always '\.' \
+          | GREP_COLORS='mt=01;33' egrep --color=always 'detect-secrets.* '
+
   docker-hub:
     runs-on: ubuntu-latest
     strategy:
