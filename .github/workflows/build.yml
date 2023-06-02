@@ -43,7 +43,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        base-image: [centos7, centos7jp, centos-stream8]
+        base-image: [centos7, centos7jp, centos-stream8, centos-stream9]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
