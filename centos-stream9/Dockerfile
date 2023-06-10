@@ -3,7 +3,8 @@ FROM quay.io/centos/centos:stream9
 # Install requirements
 RUN dnf clean all \
   && dnf update -y \
-  && dnf install -y sudo
+  && dnf install -y sudo \
+  && dnf -y install systemd
 
 # Create `ansible` user with sudo permissions
 ENV ANSIBLE_USER=ansible SUDO_GROUP=wheel
