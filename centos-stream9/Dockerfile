@@ -7,7 +7,7 @@ RUN dnf clean all \
   && dnf -y install systemd
 
 # Create `ansible` user with sudo permissions
-ENV ANSIBLE_USER=ansible SUDO_GROUP=wheel
+ENV ANSIBLE_USER=circleci SUDO_GROUP=wheel
 RUN set -xe \
   && groupadd -r ${ANSIBLE_USER} \
   && useradd -m -g ${ANSIBLE_USER} ${ANSIBLE_USER} \
